@@ -9,7 +9,7 @@ pipeline {
   stages {
     stage('Frontend Build') {
       steps {
-        dir('frontend') {
+        dir('my-frontend') {
           bat 'npm install'
           bat 'npm run build'
         }
@@ -17,7 +17,7 @@ pipeline {
     }
     stage('Backend Build & Test') {
       steps {
-        dir('backend') {
+        dir('my-backend') {
           bat 'python -m venv venv'
           bat '. venv/bin/activate && pip install -r requirements.txt'
           // Optionally add tests for API
