@@ -1,10 +1,6 @@
 pipeline {
   agent any
 
-  environment {
-    // Set up as-needed environment variables
-  }
-
   tools {
     nodejs 'NodeJS'   // name matches your Jenkins NodeJS configuration
     // python 'Python3.11' // if using Jenkins Python tool config (or use sh/bash to set up venv)
