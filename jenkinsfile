@@ -28,8 +28,8 @@ pipeline {
       steps {
         dir('my-backend') {
           bat '''
-            python -m venv venv          // Create virtual environment (preferably first line)
-            call venv\\Scripts\\activate // Activate virtual env (Windows syntax)
+            python -m venv venv
+            call venv\\Scripts\\activate
             pip install -r requirements.txt
             REM Add more backend commands here like pytest if you have tests
           '''
