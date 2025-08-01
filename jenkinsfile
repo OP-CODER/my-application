@@ -23,22 +23,22 @@ pipeline {
         }
       }
     }
-
-    stage('Backend Build & Test') {
-      steps {
-        dir('my-backend') {
-          bat '''
-            python -m venv venv
-            call venv\\Scripts\\activate
-            pip install -r requirements.txt
-            REM Add more backend commands here
-	    REM pytest
-          '''
-        }
-      }
+  stage('Backend Build & Test') {
+  steps {
+    dir('my-backend') {
+      bat '''
+        python -m venv venv
+        call venv\\Scripts\\activate
+        pip install -r requirements.txt
+        REM You can add more backend commands here, for example:
+        REM pytest
+      '''
     }
+  }
+}
 
-    stage('Deploy') {
+
+        stage('Deploy') {
       steps {
         echo 'Deploy your built frontend and backend here (e.g., copy files, restart services)'
         // Add actual deploy commands/scripts here if needed
