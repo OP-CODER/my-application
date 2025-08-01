@@ -32,6 +32,7 @@ pipeline {
             call venv\\Scripts\\activate
             pip install -r requirements.txt
             REM Add more backend commands here like pytest if you have tests
+	    REM pytest
           '''
         }
       }
