@@ -1,0 +1,40 @@
+pipeline {
+  agent any
+
+  environment {
+    // Set up as-needed environment variables
+  }
+
+  tools {
+    nodejs 'NodeJS'   // name matches your Jenkins NodeJS configuration
+    // python 'Python3.11' // if using Jenkins Python tool config (or use sh/bash to set up venv)
+  }
+
+  stages {
+    stage('Frontend Build') {
+      steps {
+        dir('frontend') {
+          sh 'npm install'
+          sh 'npm run build'
+        }
+      }
+    }
+    stage('Backend Build & Test') {
+      steps {
+        dir('backend') {
+          sh 'python -m venv venv'
+          sh '. venv/bin/activate && pip install -r requirements.txt'
+          // Optionally add tests for API
+          // sh '. venv/bin/activate && pytest'
+        }
+      }
+    }
+    stage('Deploy') {
+      steps {
+        echo 'Deploy your built frontend and backend here (e.g., scp, rsync, Docker, etc.)'
+        // Example: deploy frontend `frontend/dist/` to cloud/static host
+        // Deploy backend via SSH, Docker, or cloud CLI
+      }
+    }
+  }
+}
