@@ -22,17 +22,22 @@ pipeline {
         }
       }
     }
-    stage('Backend Build & Test') {
-      steps {
-        dir('my-backend') {
-          bat 'python -m venv venv'
-          bat '''
-          call venv\\Scripts\\activate
-          pip install -r requirements.txt
-          '''
-        }
-      }
+stage('Backend Build & Test') {
+  steps {
+    dir('my-backend') {
+      bat '''
+        call venv\\Scripts\\activate
+        pip install -r requirements.txt
+        REM Add more commands here as needed, all under the activated venv
+      '''
+      // Example: add pytest here
+      // bat '''
+      //   call venv\\Scripts\\activate
+      //   pytest
+      // '''
     }
+  }
+}
     stage('Deploy') {
       steps {
         echo 'Deploy your built frontend and backend here (e.g., copy files, restart services)'
