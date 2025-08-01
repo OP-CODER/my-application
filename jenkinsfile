@@ -2,11 +2,18 @@ pipeline {
   agent any
 
   tools {
-    nodejs 'NodeJS'   // Make sure this matches your Jenkins NodeJS Tool name
-    // python tool setup if applicable
+    nodejs 'NodeJS'
   }
 
   stages {
+    stage('Check Frontend Directory') {
+      steps {
+        bat 'dir'                        // This will list the root workspace contents
+        dir('my-frontend') {
+          bat 'dir'                      // This will list the contents of my-frontend
+        }
+      }
+    }
     stage('Frontend Build') {
       steps {
         dir('my-frontend') {
@@ -15,34 +22,21 @@ pipeline {
         }
       }
     }
-
     stage('Backend Build & Test') {
       steps {
         dir('my-backend') {
-          // Create virtual environment
           bat 'python -m venv venv'
-
-          // Activate venv and install dependencies in two steps:
           bat '''
           call venv\\Scripts\\activate
           pip install -r requirements.txt
           '''
-
-          // (Optional) Run tests - in same activated environment
-          // bat '''
-          // call venv\\Scripts\\activate
-          // pytest
-          // '''
         }
       }
     }
-
     stage('Deploy') {
       steps {
         echo 'Deploy your built frontend and backend here (e.g., copy files, restart services)'
-        // Add your deployment shell/batch commands here
       }
     }
   }
 }
-
