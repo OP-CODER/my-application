@@ -18,10 +18,11 @@ app.add_middleware(
     allow_headers=["*"],
 )
 
+# Only static data here; timestamps will be injected per request
 items = [
-    {"id": 1, "name": "Item One", "source": "Backend FastAPI", "timestamp": str(datetime.now())},
-    {"id": 2, "name": "Item Two", "source": "Backend FastAPI", "timestamp": str(datetime.now())},
-    {"id": 3, "name": "Item Three", "source": "Backend FastAPI", "timestamp": str(datetime.now())}
+    {"id": 1, "name": "Item One", "source": "Backend FastAPI"},
+    {"id": 2, "name": "Item Two", "source": "Backend FastAPI"},
+    {"id": 3, "name": "Item Three", "source": "Backend FastAPI"}
 ]
 
 class Item(BaseModel):
@@ -30,7 +31,11 @@ class Item(BaseModel):
 
 @app.get("/items")
 def get_items():
-    return items
+    # Inject fresh timestamp for every item on every request
+    return [
+        {**item, "timestamp": str(datetime.now())}
+        for item in items
+    ]
 
 @app.post("/items")
 def create_item(item: Item):
@@ -43,4 +48,3 @@ def create_item(item: Item):
     }
     items.append(new_item)
     return {"message": "Item added from backend!", "item": new_item}
-
